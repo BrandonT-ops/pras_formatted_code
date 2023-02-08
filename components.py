@@ -6,8 +6,9 @@ import threading
 import numpy as np
 from enum import Enum
 from GSM_module import *
+import serial
+import os
 
-VERBOSE = False
 
 class Components():
     """ Modeling the general components controlled by Central """
@@ -141,6 +142,10 @@ class GSMModule(Components):
         """ Initialising alarm attributes """
         super().__init__(component_type, pin_number)
 
+    def initialisation(self):
+        """initialising the GSM Module """
+        port = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=1)
+        
     def send_message(self):
         """ function to send an SMS to a number """
 
