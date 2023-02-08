@@ -6,6 +6,7 @@ import threading
 import numpy as np
 from enum import Enum
 
+VERBOSE = False
 
 class Components():
     """ Modeling the general components controlled by Central """
@@ -132,3 +133,78 @@ class Alarm(Components):
             print ("Beep")
             sleep(0.25) # Delay in seconds
           #  GPIO.output(self.pin_number,GPIO.LOW)
+
+class GSMModule(Components):
+    """ Class to model GSM module and related funcitons"""
+    def __init__(self, component_type, pin_number, component_name):
+        """ Initialising alarm attributes """
+        super().__init__(component_type, pin_number)
+
+    def debug(text):
+        if VERBOSE:
+            print ("Debug:---", text)
+
+    def resetModem():
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(P_RESET, GPIO.OUT)
+        GPIO.output(P_RESET, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(P_RESET, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(P_RESET, GPIO.LOW)
+        time.sleep(3)
+
+    def togglePower():
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(P_POWER, GPIO.OUT)
+        GPIO.output(P_POWER, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(P_POWER, GPIO.HIGH)
+        time.sleep(3)
+        GPIO.output(P_POWER, GPIO.LOW)
+
+    def isReady(ser):
+        # Resetting to defaults
+        cmd = 'ATZ\r'
+        debug("Cmd: " + cmd)
+        ser.write(cmd)
+        time.sleep(2)
+        reply = ser.read(ser.inWaiting())
+        time.sleep(8) # Wait until connected to net
+        return ("OK" in reply)
+    
+    def connectGSM(ser, apn):
+        # Login to APN, no userid/password needed
+        cmd = 'AT+CSTT="' + apn + '"\r'
+        debug("Cmd: " + cmd)
+        ser.write(cmd)
+        time.sleep(3)
+        
+        # Bringing up network
+        cmd = "AT+CIICR\r"
+        debug("Cmd: " + cmd)
+        ser.write(cmd)
+        time.sleep(5)
+        
+        # Getting IP address
+        cmd = "AT+CIFSR\r"
+        debug("Cmd: " + cmd)
+        ser.write(cmd)
+        time.sleep(3)
+        
+        # Returning all messages from modem
+        reply = ser.read(ser.inWaiting())
+        debug("connectGSM() retured:\n" + reply)
+        return reply
+
+    def send_message(self):
+        """ function to send an SMS to a number """
+
+    def listen_for_incoming_messages(self):
+        """ function to listen for incoming messages """
+
+    def messages_settings(self):
+        """ function to set the settings for the GSM Module """
+
+    def connect_to_the_internet(self):
+        """ function to connect to the internet through GSM """    
