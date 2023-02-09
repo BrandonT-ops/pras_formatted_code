@@ -3,7 +3,7 @@ import json
 
 class Data_manager():
     """ Model to manage data in the entire project """
-    def __init__(self):
+    def __init__(self,file_path):
         """ Initialising the class but well we dont know his attributes yet... """
 
     def data_encrypter(self):
@@ -16,12 +16,12 @@ class Data_manager():
 
 class Json_manager(Data_manager):
     """ This is a specialisation of Data manager who manages JSONs """
-    def __init__(self, file_name, data, file_path):
+    def __init__(self, file_name, data):
         """ Initialising JSON Manager attributes """
         self.file_name = file_name
         self.data = data
         self.file_path = file_path
-        super().__init__(self)
+        super().__init__(self,file_path)
         
     def check_if_file_exists(self):
         """ function to check if JSON file exists """
@@ -62,9 +62,9 @@ class File_manager(Data_manager):
     """ This is a specialisation of Data manager which manages Text Files """
     def __init__(self, file_path):
         """ Initialising File manager """
+        super().__init__(file_path)
         self.file_path = file_path
-        super().__init__(self)
-
+    
 
     def check_if_file_exists(self):
         """ function to check if the file exists """

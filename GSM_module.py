@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 
 VERBOSE = False
@@ -10,23 +10,23 @@ def debug(text):
         print ("Debug:---", text)
 
 def resetModem():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(P_RESET, GPIO.OUT)
-    GPIO.output(P_RESET, GPIO.LOW)
+   # GPIO.setmode(GPIO.BOARD)
+    #GPIO.setup(P_RESET, GPIO.OUT)
+    #GPIO.output(P_RESET, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(P_RESET, GPIO.HIGH)
+    #GPIO.output(P_RESET, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(P_RESET, GPIO.LOW)
+    #GPIO.output(P_RESET, GPIO.LOW)
     time.sleep(3)
 
 def togglePower():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(P_POWER, GPIO.OUT)
-    GPIO.output(P_POWER, GPIO.LOW)
+    #GPIO.setmode(GPIO.BOARD)
+    #GPIO.setup(P_POWER, GPIO.OUT)
+    #GPIO.output(P_POWER, GPIO.LOW)
     time.sleep(0.5)
-    GPIO.output(P_POWER, GPIO.HIGH)
+    #GPIO.output(P_POWER, GPIO.HIGH)
     time.sleep(3)
-    GPIO.output(P_POWER, GPIO.LOW)
+    #GPIO.output(P_POWER, GPIO.LOW)
 
 def isReady(ser):
     # Resetting to defaults

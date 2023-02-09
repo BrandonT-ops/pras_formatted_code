@@ -1,4 +1,5 @@
 import time
+from data_manager import *
 
 class Automatisms():
     """ Class meant to handle background automatisms programmed by user"""
