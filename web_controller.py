@@ -46,7 +46,7 @@ class Web_controller():
     def verify_internet_connection(self):
         """ function to verify internet connection """ 
         url = "https://www.google.com"
-        timeout = 5
+        timeout = 20
         try:
             request = requests.get(url,timeout = timeout)
             ans = True

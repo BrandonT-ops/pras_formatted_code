@@ -1,8 +1,8 @@
 """ Classes neccesary for the central class to work"""
 from data_manager import Data_manager
-from data_manager import Json_manager as jm
-from data_manager import File_manager as fm
-from web_controller import Web_controller as wb
+from data_manager import Json_manager
+from data_manager import File_manager
+from web_controller import Web_controller 
 
 """ Imports neccesary """
 import threading
@@ -13,9 +13,12 @@ class Central():
         """ Initialising controller attributes """
         self.id = id
         self.name = name
-
+    
     def run(self):
-        """ run the central """
+        #run the central
+        """  """
+        wb = Web_controller()
+        fm = File_manager()
         threadSocketStart = False
         print("The central is working")
         wb.verify_internet_connection()
@@ -49,7 +52,7 @@ class Central():
             else:
                 print("Config file missing. Contact technical support!")                   
 
-
+    
     def stop(self):
         """ stop the central """
         print("The central has stopped")
@@ -64,11 +67,13 @@ class Central():
 
     def listen_for_instructions(self):
         """function to listen for instructions given by user from web """
+        wb = Web_controller()
         thread_socket =  threading.Thread(target= wb.get_instructions)
 
     def set_pin_variables(self):
         """ function to set pin variables before running"""
         centralInfo = {}
+        jm = Json_manager()
 	
 	    #reading the config file to set pins 
         data = jm.json_read_from_file('abodeConfig.json')

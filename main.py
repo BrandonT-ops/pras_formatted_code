@@ -1,10 +1,10 @@
 """ Here's where everything starts """
 
 """ Importations neccesary """
-from enum import Enum
-from central import Central as c
-from components import Components, Light 
-from data_manager import *
+from central import Central
+from components import Light 
+from web_controller import Web_controller
+from data_manager import File_manager
 
 """
 input_components = Components("input", [1,2,3] )
@@ -19,13 +19,18 @@ light1.initialisation()
 light1.switch_on()
 light1.switch_off()
 
-#central1 =  c(1200, "Central salon")
+#
 
 """
+central1 =  Central(1200, "Central salon")
 
-f1 = File_manager("C:\Brandon\School Documents\Year 3 Notes\S2\Projet d'integration\pras_formatted_code\Data\TEXT")
+#wc = Web_controller()
 
-f1.write_to_file("Here's a lot of text and blah blah", "fc")
+#wc.verify_internet_connection()
+
+#f1 = File_manager("C:\\Brandon\\School Documents\\Year 3 Notes\\S2\\Projet d'integration\\pras_formatted_code\\Data\\TEXT")
+
+#f1.write_to_file("Here's a lot of text and blah blah", "fc")
 
 # Begin
-#central1.run()
+central1.run()

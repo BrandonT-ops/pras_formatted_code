@@ -1,3 +1,4 @@
+""" Libraries neccesary for the functioning of the components"""
 #import RPi.GPIO as GPIO
 import time
 #import cv2

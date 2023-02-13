@@ -1,0 +1,25 @@
+{
+    "centrale": [
+        {
+            "name": "ampoule salon",
+            "port": 3,
+            "state": true,
+            "type": "ampoule",
+            "pinMode" : 0
+        },
+        {
+            "name": "ampoule chambre",
+            "port": 3,
+            "state": true,
+            "type": "ampoule",
+            "pinMode" : 0
+        },
+        {
+            "name": "ampoule cuisine",
+            "port": 3,
+            "state": true,
+            "type": "ampoule",
+            "pinMode" : 1
+        }
+    ]
+}

@@ -1,9 +1,10 @@
 """ Imports for Data Manager """
 import json
+import os
 
 class Data_manager():
     """ Model to manage data in the entire project """
-    def __init__(self,file_path):
+    def __init__(self):
         """ Initialising the class but well we dont know his attributes yet... """
 
     def data_encrypter(self):
@@ -16,40 +17,37 @@ class Data_manager():
 
 class Json_manager(Data_manager):
     """ This is a specialisation of Data manager who manages JSONs """
-    def __init__(self, file_name, data):
+    def __init__(self):
         """ Initialising JSON Manager attributes """
-        self.file_name = file_name
-        self.data = data
-        self.file_path = file_path
-        super().__init__(self,file_path)
+        super().__init__(self)
         
-    def check_if_file_exists(self):
+    def check_if_file_exists(self,file_path):
         """ function to check if JSON file exists """
-        ans = os.path.exists(self.file_path)
+        ans = os.path.exists(file_path)
         return ans
 
-    def json_read_from_file(self):
+    def json_read_from_file(self, file_name):
         """ function to read JSON from file and return a dictionary"""
         #read from file and return dictionary
         try:
-            with open('JSON/'+ self.file_name) as json_file:
+            with open('JSON/'+ file_name) as json_file:
                 data = json.load(json_file)
         except:
-            print("Error: "+ self.file_name + " Absent ")	
+            print("Error: "+ file_name + " Absent ")	
             data = {}
 		
         return data
 
 
-    def json_write_to_file(self):
+    def json_write_to_file(self, file_name, data):
         """ function to write JSON to file and returns true if succeeded or false if failed"""
         ans = False
 	    #convert dictionary to json String
-        json_string = json.dumps(self.data, indent = 4, sort_keys = True)
+        json_string = json.dumps(data, indent = 4, sort_keys = True)
 	
         try:
 		    #write to file
-            with open('JSON/'+ self.file_name, 'w') as outfile:
+            with open('JSON/'+ file_name, 'w') as outfile:
                 outfile.write(json_string)
                 ans = True
         except:
@@ -60,15 +58,13 @@ class Json_manager(Data_manager):
 
 class File_manager(Data_manager):
     """ This is a specialisation of Data manager which manages Text Files """
-    def __init__(self, file_path):
+    def __init__(self,):
         """ Initialising File manager """
-        super().__init__(file_path)
-        self.file_path = file_path
-    
+        super().__init__()
 
-    def check_if_file_exists(self):
+    def check_if_file_exists(self,file_path):
         """ function to check if the file exists """
-        ans = os.path.exists(self.file_path)
+        ans = os.path.exists(file_path)
         return ans
 
     def read_from_file(self, indicator):
@@ -84,9 +80,9 @@ class File_manager(Data_manager):
                 break
         f.close()
 
-    def write_to_file(self, content, indicator):
+    def write_to_file(self, file_path, content, indicator):
         """ function to write to text file""" 
-        f = open(self.file_path, "r+")
+        f = open(file_path, "r+")
         lines = f.readlines()
         count = 0
         for line in lines:
@@ -96,7 +92,7 @@ class File_manager(Data_manager):
             count = count + 1
         f.close()
 
-        f1 = open(self.file_path, "w")
+        f1 = open(file_path, "w")
         for newLine in lines:
             f1.write(newLine)
         f1.close
