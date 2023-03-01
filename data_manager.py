@@ -1,14 +1,37 @@
 """ Imports for Data Manager """
 import json
 import os
+from cryptography.fernet import Fernet
 
 class Data_manager():
     """ Model to manage data in the entire project """
     def __init__(self):
         """ Initialising the class but well we dont know his attributes yet... """
-
+    def write_key_to_file(self):
+	key = Fernet.generate_key()
+	with open('filekey.key', 'wb') as filekey:
+           filekey.write(key)
+	
     def data_encrypter(self):
         """ Function to encrypt data """
+	# opening the key
+        with open('filekey.key', 'rb') as filekey:
+            key = filekey.read()
+ 
+        # using the generated key
+        fernet = Fernet(key)
+ 
+        # opening the original file to encrypt
+        with open('nba.csv', 'rb') as file:
+             original = file.read()
+     
+        # encrypting the file
+        encrypted = fernet.encrypt(original)
+ 
+        # opening the file in write mode and
+        # writing the encrypted data
+        with open('nba.csv', 'wb') as encrypted_file:
+             encrypted_file.write(encrypted)
 
     def data_decrypter(self):
         """ Function to decrypt data """
